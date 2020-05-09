@@ -4,7 +4,7 @@
 
 How do you access the objects in S3 from your account using the role that was given to you.
 
-So, assume there is account A and a (third party or client managed) account B
+So, there is Account A who wants to share his s3 bucket with Account .
 
 In the following examples, you grant access to users in another AWS account (Account B) so that users can manage objects that are in an S3 bucket owned by your account (Account A).
 
@@ -40,7 +40,9 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-consol
 
 https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-cli.html
 
+- Account B can do the following programmatically
 
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-api.html
 
 There is one more way you can do it,
 
