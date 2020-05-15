@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+
+<body>
+  <p>
+    <button id="ajax">Ajax</button>
+    <button id="remote">Remote</button>
+    <!-- <button id="local">Local</button>
+    <br />
+    <label for="password">
+      Password:
+      <input type="password" id="password">
+    </label> -->
+  </p>
+  <!-- <button id="login">Log in</button> -->
+  <script>
+
+    document.querySelector('#login').addEventListener('click', function () {
+      fetch('http://13.126.56.239:3000/login', {
+        method: 'post',
+        credentials: 'include',
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify({
+          password: document.getElementById('password').value
+        })
+      })
+        .then(response => response.text())
+        .then((result) => {
+          alert(result)
+          window.location.reload()
+        })
+    });
+
+    document.querySelector('#remote').addEventListener('click', function () {
+      fetch('http://13.126.56.239:3000/public', {
+        method: 'get',
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+      })
+        .then(response => response.json())
+        .then((result) => {
+          alert(result);
+        })
+    });
+    document.querySelector('#local').addEventListener('click', function () {
+      fetch('http://localhost:8080/local', {
+        method: 'get'
+      })
+        .then((response) => response.json())
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    });
+
+    // Create the XHR object.
+    function createCORSRequest(method, url) {
+      var xhr = new XMLHttpRequest();
+      if ("withCredentials" in xhr) {
+        // XHR for Chrome/Firefox/Opera/Safari.
+        xhr.open(method, url, true);
+      } else if (typeof XDomainRequest != "undefined") {
+        // XDomainRequest for IE.
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+      } else {
+        // CORS not supported.
+        xhr = null;
+      }
+      return xhr;
+    }
+
+    // Helper method to parse the title tag from the response.
+    function getTitle(text) {
+      return text.match('<title>(.*)?</title>')[1];
+    }
+
+    // Make the actual CORS request.
+    function makeCorsRequest() {
+      // This is a sample server that supports CORS.
+      var url = 'https://www.google.com';
+
+      var xhr = createCORSRequest('GET', url);
+      if (!xhr) {
+        alert('CORS not supported');
+        return;
+      }
+
+      // Response handlers.
+      xhr.onload = function () {
+        var text = xhr.responseText;
+        var title = getTitle(text);
+        alert('Response from CORS request to ' + url + ': ' + title);
+      };
+
+      xhr.onerror = function () {
+        alert('Woops, there was an error making the request.');
+      };
+
+      xhr.send();
+    }
+    document.querySelector('#ajax').addEventListener('click', function () {
+      makeCorsRequest();
+    });
+
+  </script>
+</body>
+
+</html>
