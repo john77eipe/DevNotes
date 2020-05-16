@@ -2,17 +2,23 @@
 <html>
 
 <body>
-  <h1>ACME Corp. API Provider Home</h1>
+  <h1>Client Home</h1>
+  <p>Client's friend ACME Corp. has allowed us to use his API</p>
+  <p>API endpoints provided: </p>
   <p>
     <button id="ajax">Ajax</button>
     <button id="fetch">Fetch</button>
   </p>
   <script>
     // CORS request using Fetch API
+    // This is a sample server that supports CORS.
     var url = 'http://localhost:3000/public';
     document.querySelector('#fetch').addEventListener('click', function () {
       fetch(url, {
         method: 'get',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
         .then(response => response.text())
         .then((result) => {
